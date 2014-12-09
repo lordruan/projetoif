@@ -60,10 +60,10 @@
 							<b class="caret"></b></a> <!--Seta de expansão-->
 							<ul class="dropdown-menu">
 								<li>
-									<a href="<?php echo base_url('clientes/index'); ?>">Clientes</a>
+									<a href="<?php echo base_url('clientes'); ?>">Clientes</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url('pacientes/colPaciente'); ?>">Reservas</a>
+									<a href="<?php echo base_url('reservas'); ?>">Reservas</a>
 								</li>
 							</ul>
 						</li>
@@ -132,7 +132,7 @@
 		<div class="container">
 			<br /><br />
 			<h2 style="text-align:center; text-shadow: 3px  3px 5px black;"> 
-				<font color ="ffffff">SISTEMA DE CONTROLE DO ATENDIMENTO DOMICILIAR</font>
+				<font color ="ffffff">ACME - CIA DE VÔO</font>
 			</h2>
 		</div>
 	</header>

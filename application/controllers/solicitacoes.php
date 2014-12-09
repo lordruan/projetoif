@@ -98,15 +98,24 @@ class Solicitacoes extends MY_Controller
 
 			if($this->model_sol->deletarSolicitacao($id_solicitacao)) {
 
-			$this->session->set_flashdata('aviso','Solicitação deletada com sucesso, os insumos que foram
-			 solicitados também foram deletados.');
-			redirect('solicitacoes/colSolicitacao/','refresh');
+			$this->session->set_flashdata('excluirok','Solicitação deletada com sucesso, os insumos que foram
+			solicitados também foram deletados.');
+			$dados = array(
+				'title' => 'Clientes',
+				'tela' => '/clientes/clientes',
+				'clientes' => $this->model_clientes->get_all()->result(),
+			);
+			$this->load->view('index',$dados);
 
 			} else {
 
-			$this->session->set_flashdata('aviso','Não foi possível deletar a solicitacao');
-			redirect('solicitacoes/colSolicitacao/','refresh');
-
+			$this->session->set_flashdata('excluirok','Não foi possível deletar a solicitacao');
+			$dados = array(
+				'title' => 'Clientes',
+				'tela' => '/clientes/clientes',
+				'clientes' => $this->model_clientes->get_all()->result(),
+			);
+			$this->load->view('index',$dados);
 			}
 
 		}

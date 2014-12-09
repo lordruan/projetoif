@@ -14,4 +14,23 @@ class Model_clientes extends CI_Model{
 			redirect('clientes/clientes');
 		}
 	}
+	public function deletarClientes($codigo = NULL) {
+		$this->db->where('codigo',$codigo);
+		return $this->db->delete('clientes');
+	}
+	public function updateClientes($dados=NULL, $condicao=null){
+
+		if($dados!=NULL && $condicao != null):
+
+			$this->db->where('codigo',$condicao);
+			$this->db->update('clientes',$dados);
+			$this->session->set_flashdata('aviso','Edição efetuada com sucesso');
+			redirect("clientes");
+		
+		endif;
+	}
+	public function get_ById($id = NULL)
+	{		
+		return $this->db->query("SELECT * FROM clientes WHERE codigo=".$this->db->escape($id)." LIMIT 1");
+	}
 }

@@ -1,6 +1,9 @@
 <div class="col-lg-10 center">
 	<div class="well bs-component">
 		<?php 
+			if ($this->session->flashdata('aviso')) {
+				echo '<div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert">x</button>'. $this->session->flashdata('aviso').'</div>';	
+			}
 			$atriForm = array('class' => 'form',);
 			echo form_open('clientes/addClientes', $atriForm);
 			$attr_label = array(
@@ -99,7 +102,7 @@
 							</div>
 							<div class="modal-footer">
 								<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-								'.anchor("cliente/deletar/$linha->codigo",'Excluir',$anchor_delete).'
+								'.anchor("clientes/deletar/$linha->codigo",'Excluir',$anchor_delete).'
 								</div>					
 						</div>
 					</div>

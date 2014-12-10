@@ -66,7 +66,7 @@ class Clientes extends MY_Controller {
 						'telefones',
 						'contato'
 					),$this->input->post());
-			if(!empty($this->uri->segment(3)))
+			if($this->uri->segment(3) != null)
 			$this->model_clientes->updateClientes($dados,$this->uri->segment(3));	
 		}
 
@@ -84,32 +84,3 @@ class Clientes extends MY_Controller {
 		
 	}
 }
-
-
-
-/*public function editarInsumo()
-	{
-		$ids = explode('-', $this->uri->segment(3));
-		if (!empty($ids[1])) {
-			$id_cad_insumos_cad_insumos = $ids[0];
-			$id_sol_insumos_solicitacao_insumos = $ids[1];
-			$obs = $this->input->post('observacao');
-			$insumo = $this->model_sol->getInsumo($id_cad_insumos_cad_insumos,$id_sol_insumos_solicitacao_insumos)->row();
-
-			if(!empty($obs)) {
-
-				if(!$this->model_sol->updateInsumoSolicitado($id_sol_insumos_solicitacao_insumos,$id_cad_insumos_cad_insumos,$obs)){
-
-					$this->session->set_flashdata('error','Erro ao atualizar!');
-					redirect('solicitacoes/editarInsumo/'.$id_cad_insumos_cad_insumos.'-'.$id_sol_insumos_solicitacao_insumos,'refresh');
-
-				} else {
-
-					$this->session->set_flashdata('success','Atualizado com sucesso!');
-					redirect('solicitacoes/editarInsumo/'.$id_cad_insumos_cad_insumos.'-'.$id_sol_insumos_solicitacao_insumos,'refresh');
-
-				}
-
-			}
-		}
-	}*/

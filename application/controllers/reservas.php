@@ -82,4 +82,43 @@ class Reservas extends MY_Controller {
 		);
 		$this->load->view('index',$dados);
 	}
+	public function editar()
+	{
+		$ids = explode('-', $this->uri->segment(3));
+		if (!empty($ids[1])) {
+		//$linha->codigo_voo.'-'.$linha->codigo_cliente
+			$codigo_voo = $ids[0];
+			$codigo_cliente = $ids[1];
+			$assentos = $this->input->post('assentos');
+			$reserva = $this->model_reservas->getReservaByID($codigo_voo,$codigo_cliente)->row();
+
+			if(!empty($assentos)) {
+
+				if(!$this->model_reservas->updateReserva($codigo_voo,$codigo_cliente,$assentos)){
+					$this->session->set_flashdata('error','Erro ao atualizar!');
+					redirect('reservas/editar/'.$codigo_voo.'-'.$codigo_cliente,'refresh');
+				} else {
+					$this->session->set_flashdata('success','Atualizado com sucesso!');
+					redirect('solicitacoes/editarInsumo/'.$codigo_voo.'-'.$codigo_cliente,'refresh');
+				}
+
+			}
+			if (!empty($reserva)) {
+				$dados = array(
+						'titulo' => 'Reservas',
+						'tela' => '/reservas/editar',
+						'voos' => $this->getOptVoos($codigo_voo),
+						'clientes' => $this->getOptClientes($codigo_cliente),
+						'id_ref' =>$this->uri->segment(3),
+						'reserva' => $reserva );
+				$this->load->view('index',$dados);
+			}
+		}else{
+			$this->session->set_flashdata('error','Explode error');
+			$dados = array(
+						'titulo' => 'Sistema de Acamados',
+						'tela' => 'sol/editItemInsumo');
+			$this->load->view('index',$dados);			
+		}
+	}
 }

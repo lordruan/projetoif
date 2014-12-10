@@ -72,8 +72,9 @@
 							<b class="caret"></b></a> <!--Seta de expansão-->
 												
 							<ul class="dropdown-menu">
-								<li><a href="<?php echo base_url('insumos/newInsumos')?>">Cadastro</a></li>
-								<li><a href="<?php echo base_url('insumos/colInsumos')?>">Consultar/Alterar</a></li>
+								<li><a href="<?php echo base_url('avioes')?>">Aviões</a></li>
+								<li><a href="<?php echo base_url('voos')?>">Vôos</a></li>
+								<li><a href="<?php echo base_url('escalas')?>">Escalas</a></li>
 							</ul>
 
 						</li>
@@ -84,9 +85,7 @@
 							<b class="caret"></b></a> <!--Seta de expansão-->
 												
 							<ul class="dropdown-menu">
-							<li><a href="<?php echo base_url('solicitacoes/novasolicitacao')?>">Cadastro (PROVISÓRIO)</a></li>
-								<li><a href="<?php echo base_url('solicitacoes/newSolicitacao')?>">Cadastro (EM MANUTENÇÃO)</a></li>
-								<li><a href="<?php echo base_url('solicitacoes/colSolicitacao')?>">Consultar/Alterar</a></li>
+							<li><a href="<?php echo base_url('tripulantes')?>">Tripulantes</a></li>
 							</ul>
 
 						</li>

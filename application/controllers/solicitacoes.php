@@ -655,23 +655,20 @@ class Solicitacoes extends MY_Controller
 	{
 		$ids = explode('-', $this->uri->segment(3));
 		if (!empty($ids[1])) {
-			$id_cad_insumos_cad_insumos = $ids[0];
-			$id_sol_insumos_solicitacao_insumos = $ids[1];
-			$obs = $this->input->post('observacao');
-			$insumo = $this->model_sol->getInsumo($id_cad_insumos_cad_insumos,$id_sol_insumos_solicitacao_insumos)->row();
+		//$linha->codigo_voo.'-'.$linha->codigo_cliente
+			$codigo_voo = $ids[0];
+			$codigo_cliente = $ids[1];
+			$assentos = $this->input->post('assentos');
+			$reserva = $this->model_reservas->getReserva($codigo_voo,$codigo_cliente)->row();
 
-			if(!empty($obs)) {
+			if(!empty($assentos)) {
 
-				if(!$this->model_sol->updateInsumoSolicitado($id_sol_insumos_solicitacao_insumos,$id_cad_insumos_cad_insumos,$obs)){
-
+				if(!$this->model_reservas->updateReserva($codigo_voo,$codigo_cliente,$assentos)){
 					$this->session->set_flashdata('error','Erro ao atualizar!');
 					redirect('solicitacoes/editarInsumo/'.$id_cad_insumos_cad_insumos.'-'.$id_sol_insumos_solicitacao_insumos,'refresh');
-
 				} else {
-
 					$this->session->set_flashdata('success','Atualizado com sucesso!');
 					redirect('solicitacoes/editarInsumo/'.$id_cad_insumos_cad_insumos.'-'.$id_sol_insumos_solicitacao_insumos,'refresh');
-
 				}
 
 			}

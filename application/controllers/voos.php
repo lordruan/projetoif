@@ -10,21 +10,22 @@ class Voos extends MY_Controller {
 			'title' => 'Vôos',
 			'tela' => '/voos/voos',
 			'voos' => $this->model_voos->get_all()->result(),
+			'avioes' => $this->getOptAvioes(),
 		);
 		$this->load->view('index',$dados);
 	}
-	public function getOptAvioes($sigla_aviao = 0)
+	public function getOptAvioes($sigla_aviao = '')
 	{
 		$Avioes = $this->model_avioes->get_all();
 		$option = "<option value=''></option>";
-		if ($sigla_aviao == 0) {	
+		if ($sigla_aviao == '') {	
 			foreach($Avioes -> result() as $linha) {
 				$option .= "<option value='$linha->sigla'>$linha->sigla</option>";
 			}
 			return $option;
 		}else{
 			foreach($Avioes -> result() as $linha) {
-				if ($sigla_voo == $linha->sigla){
+				if ($sigla_aviao == $linha->sigla){
 					$option .= "<option selected=\"selected\" value=$linha->sigla>$linha->sigla</option>";
 				}else{
 					$option .= "<option value='$linha->sigla'>$linha->sigla</option>"; 
@@ -41,6 +42,8 @@ class Voos extends MY_Controller {
 		$this->form_validation->set_rules('assentos_disponiveis','Hora de Partida','trim|required|max_length[5]|integer');
 		$this->form_validation->set_rules('sigla_aviao','Avião','trim|required');
 		if($this->form_validation->run()==TRUE){
+			$tmp = str_replace('T', ' ', $_POST['partida']);
+			$_POST['partida'] = $tmp;
 			$dados = elements(
 					array(
 						'origem',
@@ -75,9 +78,11 @@ class Voos extends MY_Controller {
 		$this->form_validation->set_rules('origem','Cidade de Origem','trim|required|max_length[50]|ucwords');
 		$this->form_validation->set_rules('destino','Cidade de Destino','trim|required|max_length[50]|ucwords');
 		$this->form_validation->set_rules('partida','Hora de Partida','trim|required');
-		$this->form_validation->set_rules('assentos_disponiveis','Hora de Partida','trim|required|max_length[5]|integer');
+		$this->form_validation->set_rules('assentos_disponiveis','Assentos Disponiveis','trim|required|max_length[5]|integer');
 		$this->form_validation->set_rules('sigla_aviao','Avião','trim|required');
 		if($this->form_validation->run()==TRUE){
+			$tmp = str_replace('T', ' ', $_POST['partida']);
+			$_POST['partida'] = $tmp;
 			$dados = elements(
 					array(
 						'origem',
@@ -94,12 +99,12 @@ class Voos extends MY_Controller {
 		if ($codigo == '') {
 			redirect('voos');
 		}
-		$voos = $this->model_voos->get_ById($codigo)->row();
+		$voo = $this->model_voos->get_ById($codigo)->row();
 		$dados = array(
 			'title' => 'Voos',
 			'tela' => '/voos/editar',
-			'voos' => $voos,
-			'avioes' => $this->getOptAvioes(),
+			'voo' => $voo,
+			'avioes' => $this->getOptAvioes($voo->sigla_aviao),
 		);
 		$this->load->view('index',$dados);
 		

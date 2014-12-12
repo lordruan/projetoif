@@ -15,4 +15,24 @@ class Model_reservas extends CI_Model{
 			redirect('reservas');
 		}
 	}
+	public function deletarReservas($codigo_cliente = NULL, $codigo_voo = NULL) {
+		$this->db->where('codigo_cliente',$codigo_cliente);
+		$this->db->where('codigo_voo',$codigo_voo);
+		return $this->db->delete('reservas');
+	}
+	public function updateReservas($dados=NULL, $codigo_cliente = NULL, $codigo_voo = NULL){
+
+		if($dados!=NULL && $condicao != null):
+			$this->db->where('codigo_cliente',$codigo_cliente);
+			$this->db->where('codigo_voo',$codigo_voo);
+			$this->db->update('reservas',$dados);
+			$this->session->set_flashdata('aviso','Edição efetuada com sucesso');
+			redirect("reservas");
+		
+		endif;
+	}
+	public function get_ById($codigo_cliente = NULL, $codigo_voo = NULL)
+	{		
+		return $this->db->query("SELECT * FROM reservas WHERE codigo_cliente=".$this->db->escape($codigo_cliente)." and codigo_voo=".$this->db->escape($codigo_voo)." LIMIT 1");
+	}
 }

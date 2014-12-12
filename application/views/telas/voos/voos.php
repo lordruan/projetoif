@@ -1,60 +1,57 @@
 <div class="col-lg-10 center">
 	<div class="well bs-component">
-<?php 
-$atriForm = array('class' => 'form',);
-echo form_open('reservas/addReserva', $atriForm);
-$attr_label = array(
-   	'class' => 'col-lg-2 control-label',
-);
-	echo "<fieldset>
-	<div class=\"form-group\">";
-		echo validation_errors('<div class="alert alert-dismissable alert-danger"><button type="button" class="close" data-dismiss="alert">x</button>','</div>');
-		if ($this->session->flashdata('cadastrook')) {
-			echo '<p>'. $this->session->flashdata('cadastrook').'</p>';	
-		}
-		echo "<div class=\"row\">";	
-		echo "<div class=\"col-lg-3\">";
-		echo "</div>";
-		echo form_label('Vôo:','codigo_voo',$attr_label);
-		echo "<div class=\"col-lg-4\">";
+		<?php 
+			if ($this->session->flashdata('aviso')) {
+				echo '<div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert">x</button>'. $this->session->flashdata('aviso').'</div>';	
+			}
+			$atriForm = array('class' => 'form',);
+			echo form_open('voos/addVoos', $atriForm);
+			$attr_label = array(
+		    	'class' => 'col-lg-2 control-label',
+			);
+			echo "<fieldset><div class=\"form-group\">";
+			echo validation_errors('<div class="alert alert-dismissable alert-danger"><button type="button" class="close" data-dismiss="alert">x</button>','</div>');
+			if ($this->session->flashdata('cadastrook')) {
+				echo '<p>'. $this->session->flashdata('cadastrook').'</p>';	
+			}			
+			echo form_label('Codigo:','codigo',$attr_label);
+			echo "<div class=\"col-lg-4\">";
+				echo form_input(array('name' => 'codigo', 'id'=>'codigo', 'class' => 'form-control','disabled'=>''),set_value('codigo'));
+			echo "</div>";
+			echo form_label('Cidade de Origem:','origem',$attr_label);
+			echo "<div class=\"col-lg-4\">";
+				echo form_input(array('name' => 'origem', 'id'=>'origem', 'class' => 'form-control',),set_value('origem'));
+			echo "</div>";
+			echo form_label('Cidade de Destino:','destino',$attr_label);
+			echo "<div class=\"col-lg-4\">";
+				echo form_input(array('name' => 'destino', 'id'=>'destino', 'class' => 'form-control',),set_value('destino'));
+			echo "</div>";
+			echo form_label('Hora de Partida:','partida',$attr_label);
+			echo "<div class=\"col-lg-4\">";
+				echo form_input(array('name' => 'partida', 'id'=>'partida', 'class' => 'form-control', 'type' => 'datetime-local'),set_value('partida'));
+			echo "</div>";
+			echo form_label('Assentos Disponiveis:','assentos_disponiveis',$attr_label);
+			echo "<div class=\"col-lg-4\">";
+				echo form_input(array('name' => 'assentos_disponiveis', 'id'=>'assentos_disponiveis', 'class' => 'form-control',),set_value('assentos_disponiveis'));
+			echo "</div>";
+			echo form_label('Avião:','sigla_aviao',$attr_label);
+			echo "<div class=\"col-lg-4\">";
 			echo '
-					<select class="input-large form-control" name="codigo_voo" id="codigo_voo">
-					'.$voos.'
+					<select class="input-large form-control" name="sigla_aviao" id="sigla_aviao">
+					'.$avioes.'
 					</select>
 			';
+			echo "</div>";
+			echo "<div class=\"col-lg-5\"><br />";
+			echo "</div>";
+			echo "<div class=\"col-lg-2\"><br />";
+				echo form_submit(array('name' => 'cadastrar','id' => 'cadastrar', 'class' => 'btn btn-primary form-control'),'Cadastrar');
+			echo "</div>";
+			echo "</div>";
 		echo "</div>";
-		echo "</div>";
-		echo "<div class=\"row\">";	
-		echo "<div class=\"col-lg-3\">";
-		echo "</div>";
-		echo form_label('Cliente:','codigo_cliente',$attr_label);
-		echo "<div class=\"col-lg-4\">";
-			echo '
-					<select class="input-large form-control" name="codigo_cliente" id="codigo_cliente">
-					'.$clientes.'
-					</select>
-			';
-		echo "</div>";
-		echo "</div>";
-		echo "<div class=\"row\">";	
-		echo "<div class=\"col-lg-3\">";
-		echo "</div>";
-		echo form_label('Numero de lugares:','assentos',$attr_label);
-		echo "<div class=\"col-lg-4\">";
-			echo form_input(array('name' => 'assentos', 'id' => 'assentos','class' => 'form-control'),set_value('assentos'));
-		echo "</div>";
-		echo "</div>";
-		echo "<div class=\"row\">";		
-		echo "<div class=\"col-lg-5\">";
-		echo "</div>";
-		echo "<div class=\"col-lg-2\"><br />";
-			echo form_submit(array('name' => 'registrar','id' => 'registrar', 'class' => 'btn btn-primary form-control'),'Registrar');
-		echo "</div>";
-		echo "</div>";
-	echo "</div>";
 	echo "<fieldset>";
-form_close('reservas/addReserva');
-?>
+	form_close('voos/addVoos');
+		 ?>
 	</div>
 </div>
 </div>
@@ -69,12 +66,15 @@ form_close('reservas/addReserva');
 			}
 		?>
 		<div id="tabs-1">
-			<table class="display table table-striped table-hover table-condensed" id="consultar_reservas">
+			<table class="display table table-striped table-hover table-condensed" id="consultar_usuarios">
 				<thead> 
 					<tr>
-						<th class="span3">Vôo</th>
-						<th class="span2">Cliente</th>
-						<th class="span2">Assentos</th>
+						<th class="span3">Codigo</th>
+						<th class="span3">Cidade de Origem</th>
+						<th class="span3">Cidade de Destino</th>
+						<th class="span3">Hora de Partida</th>
+						<th class="span3">Assentos Disponiveis</th>
+						<th class="span3">Avião</th>
 						<th class="span3" >Operacoes</th>
 					</tr>
 				</thead>
@@ -82,26 +82,32 @@ form_close('reservas/addReserva');
 		<?php
 			$anchor_delete = array('class'=>"btn  btn-danger");
 			$anchor_edit = array('class'=>"label label-warning");
-			foreach ($reservas as $linha) {
-				$voo = $linha->codigo_voo.'-'.$linha->destino;
-				$cliente = $linha->nome;
-				$assentos = $linha->assentos;
-				$operacoes = anchor('reservas/editar/'.$linha->codigo_voo.'-'.$linha->codigo_cliente.'','Editar',$anchor_edit).'<i class="icon-italic"></i> <a href="#MeuModal'.$linha->codigo_voo.'-'.$linha->codigo_cliente.'" class="label  label-danger" data-toggle="modal">Deletar</a>';
+			foreach ($voos as $linha) {
+				$codigo = $linha->codigo;
+				$origem = $linha->origem;
+				$destino = $linha->destino;
+				$partida = $linha->partida;
+				$assentos_disponiveis = $linha->assentos_disponiveis;
+				$sigla_aviao = $linha->sigla_aviao;
+				$operacoes = anchor("voos/editar/$linha->codigo",'Editar',$anchor_edit).' <i class="icon-italic"></i> <a href="#MeuModal'.$linha->codigo.'" class="label  label-danger" data-toggle="modal">Deletar</a>';
 				echo "<tr class='gradeA'>";
-		        echo "<td><center>$voo</center></td>";
-		        echo "<td><center>$cliente</center></td>";
-		        echo "<td><center>$assentos</center></td>";
+		        echo "<td><center>$codigo</center></td>";
+				echo "<td><center>$origem</center></td>";
+				echo "<td><center>$destino</center></td>";
+				echo "<td><center>$partida</center></td>";
+				echo "<td><center>$assentos_disponiveis</center></td>";
+				echo "<td><center>$sigla_aviao</center></td>";
 				echo "<td><center>$operacoes</center></td>";
-				echo '<div id="MeuModal'.$linha->codigo_voo.'-'.$linha->codigo_cliente.'" class="modal fade" aria-hidden="true" style="display: none;">
+				echo '<div id="MeuModal'.$linha->codigo.'" class="modal fade" aria-hidden="true" style="display: none;">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button class="close" data-dismiss="modal" aria-hidden="true">x</button>
-								<h3 id="meuModelLabel">Realmente deseja Excluir esta reserva?</h3>
+								<h3 id="meuModelLabel">Realmente deseja Excluir o cliente?</h3>
 							</div>
 							<div class="modal-footer">
 								<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-								'.anchor('cliente/deletar/'.$linha->codigo_voo.'-'.$linha->codigo_cliente.'','Excluir',$anchor_delete).'
+								'.anchor("voos/deletar/$linha->codigo",'Excluir',$anchor_delete).'
 								</div>					
 						</div>
 					</div>
@@ -116,7 +122,7 @@ form_close('reservas/addReserva');
 		<script>
 		//Todos scripts dentro de Document.Ready são Jquery 
 		$(document).ready(function() { 
-			$('#consultar_reservas').dataTable({
+			$('#consultar_usuarios').dataTable({
 				"bJQueryUI": true,
 				"sPaginationType": "full_numbers",
 				"sDom": '<"H"Tlfr>t<"F"ip>',
@@ -126,15 +132,15 @@ form_close('reservas/addReserva');
 						{ 
 							"sExtends": "xls",
 							"sButtonText": "Exportar para Excel",
-							"sTitle": "Reservas",
-							"mColumns": [0, 1, 2]
+							"sTitle": "Usuarios",
+							"mColumns": [0, 1, 2, 3, 4,5]
 						},
 						{
 							"sExtends": "pdf",
 							"sButtonText": "Exportar para PDF",
-							"sTitle": "Reservas",
+							"sTitle": "Usuarios",
 							"sPdfOrientation": "landscape",
-							"mColumns": [0, 1, 2] 
+							"mColumns": [0, 1, 2, 3, 4,5] 
 						} 
 					] 
 				},

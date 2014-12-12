@@ -124,4 +124,20 @@ class Reservas extends MY_Controller {
 				$this->load->view('index',$dados);			
 		}
 	}
+	public function deletar()
+	{
+		$ids = explode('-', $this->uri->segment(3));
+		if (!empty($ids[1])) {
+			//$linha->codigo_voo.'-'.$linha->codigo_cliente
+				$codigo_voo = $ids[0];
+				$codigo_cliente = $ids[1];
+			if($this->model_reservas->deletarReservas($codigo_voo,$codigo_cliente)) {
+				$this->session->set_flashdata('aviso','Deletado com sucesso.');
+				redirect('reservas','refresh');
+			} else {
+				$this->session->set_flashdata('aviso','Não Foi possivel deletar');
+				redirect('reservas','refresh');
+			}
+		}
+	}
 }

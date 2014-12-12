@@ -31,7 +31,7 @@ $attr_label = array(
 		echo "<div class=\"col-lg-4\">";
 			echo '
 					<select class="input-large form-control" name="codigo_cliente" id="codigo_cliente">
-					'.$clientes.'
+					'.$tripulantes.'
 					</select>
 			';
 		echo "</div>";

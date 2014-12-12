@@ -15,10 +15,8 @@ class Model_reservas extends CI_Model{
 			redirect('reservas');
 		}
 	}
-	public function deletarReservas($codigo_cliente = NULL, $codigo_voo = NULL) {
-		$this->db->where('codigo_cliente',$codigo_cliente);
-		$this->db->where('codigo_voo',$codigo_voo);
-		return $this->db->delete('reservas');
+	public function deletarReservas($codigo_voo = NULL, $codigo_cliente = NULL) {
+		return $this->db->query("DELETE FROM reservas WHERE codigo_cliente=".$this->db->escape($codigo_cliente)." and codigo_voo=".$this->db->escape($codigo_voo));
 	}
 	public function updateReserva($dados=NULL, $codigo_cliente = NULL, $codigo_voo = NULL){
 
@@ -26,7 +24,6 @@ class Model_reservas extends CI_Model{
 			$where = "codigo_cliente = ".$this->db->escape($codigo_cliente)." AND codigo_voo = ".$this->db->escape($codigo_voo).""; 
 			$query= $this->db->update_string('reservas', $dados, $where);
 			$this->db->query($query);
-			$str = $this->db->last_query();
 			$this->session->set_flashdata('aviso','Editado com sucesso');
 			redirect("reservas");		
 		endif;

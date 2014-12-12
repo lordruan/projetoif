@@ -104,7 +104,7 @@ form_close('reservas/addReserva');
 							</div>
 							<div class="modal-footer">
 								<button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-								'.anchor('cliente/deletar/'.$linha->codigo_voo.'-'.$linha->codigo_cliente.'','Excluir',$anchor_delete).'
+								'.anchor('reservas/deletar/'.$linha->codigo_voo.'-'.$linha->codigo_cliente.'','Excluir',$anchor_delete).'
 								</div>					
 						</div>
 					</div>

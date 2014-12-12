@@ -3,7 +3,7 @@
 /**
  * 
  */
-class Reservas extends MY_Controller {
+class Tripulacao extends MY_Controller {
 	
 	function __construct() {
 		parent::__construct();
@@ -28,18 +28,18 @@ class Reservas extends MY_Controller {
 			return $option;
 		}
 	}
-	public function getOptClientes($codigo_clientes = 0)
+	public function getOptTripulantes($codigo_tripulantes = 0)
 	{
-		$clientes = $this->model_clientes->get_all();
+		$tripulantes = $this->model_tripulantes->get_all();
 		$option = "<option value=''></option>";
-		if ($codigo_clientes == 0) {	
-			foreach($clientes -> result() as $linha) {
+		if ($codigo_tripulantes == 0) {	
+			foreach($tripulantes -> result() as $linha) {
 				$option .= "<option value='$linha->codigo'>$linha->nome</option>";
 			}
 			return $option;
 		}else{
-			foreach($clientes -> result() as $linha) {
-				if ($codigo_clientes == $linha->codigo){
+			foreach($codigo_tripulantes -> result() as $linha) {
+				if ($tripulantes == $linha->codigo){
 					$option .= "<option selected=\"selected\" value=$linha->codigo>$linha->nome</option>";
 				}else{
 					$option .= "<option value='$linha->codigo'>$linha->nome</option>"; 
@@ -51,11 +51,11 @@ class Reservas extends MY_Controller {
 	public function index()
 	{
 		$dados = array(
-			'title' => 'Reservas',
-			'tela' => '/reservas/reservas',
+			'title' => 'Tripulacao',
+			'tela' => '/tripulacao/tripulacao',
 			'voos' => $this->getOptVoos(),
-			'clientes' => $this->getOptClientes(),
-			'reservas' => $this->model_reservas->get_all()->result(),
+			'tripulantes' => $this->getOptClientes(),
+			'tripulacao' => $this->model_tripulacao->get_all()->result(),
 		);
 		$this->load->view('index',$dados);
 	}
@@ -71,14 +71,14 @@ class Reservas extends MY_Controller {
 						'codigo_cliente',
 						'assentos',
 					),$this->input->post());
-			$this->model_reservas->inserirReservas($dados);
+			$this->model_tripulacao->inserirTripulacao($dados);
 		}
 		$dados = array(
-			'title' => 'Reservas',
-			'tela' => '/reservas/reservas',
+			'title' => 'Tripulação',
+			'tela' => '/tripulacao/tripulacao',
 			'voos' => $this->getOptVoos(),
-			'clientes' => $this->getOptClientes(),
-			'reservas' => $this->model_reservas->get_all()->result(),
+			'tripulantes' => $this->getOptClientes(),
+			'tripulacao' => $this->model_tripulacao->get_all()->result(),
 		);
 		$this->load->view('index',$dados);
 	}
@@ -90,24 +90,25 @@ class Reservas extends MY_Controller {
 			$codigo_voo = $ids[0];
 			$codigo_cliente = $ids[1];
 			$assentos = $this->input->post('assentos');
-			$reserva = $this->model_reservas->get_ById($codigo_cliente,$codigo_voo)->row();
+			$reserva = $this->model_tripulacao->getReservaByID($codigo_voo,$codigo_cliente)->row();
+
 			if(!empty($assentos)) {
-				$dados = array('assentos' => $assentos);
-				if(!$this->model_reservas->updateReserva($dados,$codigo_cliente,$codigo_voo)){
-					$this->session->set_flashdata('aviso','Erro ao atualizar!');
-					redirect('reservas/editar/'.$codigo_voo.'-'.$codigo_cliente,'refresh');
+
+				if(!$this->model_tripulacao->updateReserva($codigo_voo,$codigo_cliente,$assentos)){
+					$this->session->set_flashdata('error','Erro ao atualizar!');
+					redirect('tripulacao/editar/'.$codigo_voo.'-'.$codigo_cliente,'refresh');
 				} else {
-					$this->session->set_flashdata('aviso','Atualizado com sucesso!');
-					redirect('reservas/editar/'.$codigo_voo.'-'.$codigo_cliente,'refresh');
+					$this->session->set_flashdata('success','Atualizado com sucesso!');
+					redirect('solicitacoes/editarInsumo/'.$codigo_voo.'-'.$codigo_cliente,'refresh');
 				}
 
 			}
 			if (!empty($reserva)) {
 				$dados = array(
-						'titulo' => 'Reservas',
-						'tela' => '/reservas/editar',
+						'titulo' => 'Tripulação',
+						'tela' => '/tripulacao/editar',
 						'voos' => $this->getOptVoos($codigo_voo),
-						'clientes' => $this->getOptClientes($codigo_cliente),
+						'tripulantes' => $this->getOptClientes($codigo_cliente),
 						'id_ref' =>$this->uri->segment(3),
 						'reserva' => $reserva );
 				$this->load->view('index',$dados);
@@ -115,13 +116,9 @@ class Reservas extends MY_Controller {
 		}else{
 			$this->session->set_flashdata('error','Explode error');
 			$dados = array(
-						'titulo' => 'Reservas',
-						'tela' => '/reservas/editar',
-						'voos' => $this->getOptVoos($codigo_voo),
-						'clientes' => $this->getOptClientes($codigo_cliente),
-						'id_ref' =>$this->uri->segment(3),
-						'reserva' => $reserva );
-				$this->load->view('index',$dados);			
+						'titulo' => 'Sistema de Acamados',
+						'tela' => 'sol/editItemInsumo');
+			$this->load->view('index',$dados);			
 		}
 	}
 }

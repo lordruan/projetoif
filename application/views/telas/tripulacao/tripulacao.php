@@ -12,9 +12,6 @@ $attr_label = array(
 		if ($this->session->flashdata('cadastrook')) {
 			echo '<p>'. $this->session->flashdata('cadastrook').'</p>';	
 		}
-		if ($this->session->flashdata('aviso')) {
-				echo '<div class="alert alert-block alert-success"><button type="button" class="close" data-dismiss="alert">x</button>'. $this->session->flashdata('aviso').'</div>';	
-		}
 		echo "<div class=\"row\">";	
 		echo "<div class=\"col-lg-3\">";
 		echo "</div>";

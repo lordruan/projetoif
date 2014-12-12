@@ -86,6 +86,8 @@
 												
 							<ul class="dropdown-menu">
 							<li><a href="<?php echo base_url('tripulantes')?>">Tripulantes</a></li>
+							<li><a href="<?php echo base_url('comandantes')?>">Comandantes</a></li>
+							<li><a href="<?php echo base_url('tripulacao')?>">Tripulação</a></li>
 							</ul>
 
 						</li>

@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('model_avioes','model_voos','model_clientes','model_tripulantes','model_voos','model_reservas','model_relatorios','model_ubs','model_pacientes','model_users','model_cids','model_udm','model_insumos','model_sol');
+$autoload['model'] = array('model_tripulacao','model_escalas','model_avioes','model_voos','model_clientes','model_tripulantes','model_voos','model_reservas');
 
 
 /* End of file autoload.php */
